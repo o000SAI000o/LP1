@@ -1,0 +1,5 @@
+>gcc filename.c -o outputfilename
+
+  eg. gcc pass1.c -o pass1
+  
+>./filename

@@ -64,7 +64,7 @@ int main() {
 
 
 
-
+/*
 explanation:
 
 This C program implements the **FIFO (First-In-First-Out) Page Replacement Algorithm** to simulate page replacement in memory management. Here’s a breakdown of how it works:
@@ -229,3 +229,4 @@ Total Page Faults: 6
 - Its main disadvantage is that it does not consider the frequency of page accesses; it can replace pages that might be used again soon, leading to higher page fault rates in some cases.
 
 FIFO is ideal for situations where simplicity and ease of implementation are more important than optimal page replacement performance. However, algorithms like **LRU (Least Recently Used)** or **Optimal Page Replacement** are generally more efficient in minimizing page faults.
+*/

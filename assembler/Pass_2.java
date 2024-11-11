@@ -156,3 +156,74 @@ public class Pass_2 {
         br.close();
     }
 }
+/*
+Your code for `Pass_2` appears to be well-structured for reading the symbol table (`SYMTAB`) and literal table (`LITTAB`) from files, processing the intermediate code, and generating output to a file (`PASS2.txt`). Here’s a breakdown of what the code does and some suggestions for potential improvements:
+
+### What the Code Does:
+1. **Class `TableRow`**: Represents a table row with three fields: `symbol`, `address`, and `index`. It also provides getter and setter methods for each field.
+   
+2. **Class `Pass_2`**:
+   - **Attributes**: Two `ArrayLists` to hold the symbol table (`SYMTAB`) and literal table (`LITTAB`).
+   - **Method `readtables()`**: Reads `SYMTAB.txt` and `LITTAB.txt` from the desktop and stores them in `SYMTAB` and `LITTAB`, respectively. It reads each line and splits it by spaces to populate the `TableRow` objects.
+   - **Method `generateCode()`**: Processes the intermediate code file (`IC.txt`), writes the processed code to `PASS2.txt`, and handles the various instructions (AD, DL, IS) in different ways.
+     - It skips AD and DL instructions (`DL,02`).
+     - Processes IS instructions (machine code) and writes them in the desired format.
+   
+3. **Main Method**: Initializes the `Pass_2` object and calls the `generateCode` method to start the processing.
+
+### Potential Improvements and Points to Check:
+- **Exception Handling**: 
+    - Currently, your code catches exceptions generically and prints the error message. You might want to add more specific error handling (e.g., handling missing files or parsing errors more gracefully).
+    
+- **File Paths**:
+    - You have hardcoded file paths in your code, which can create portability issues. Consider passing the file paths as arguments or using relative paths instead of absolute paths. For example, you can use `Paths.get("Desktop", "SYMTAB.txt")` for more flexibility.
+    
+- **Input File Format**:
+    - Your code assumes a specific format of the input files. If the file structure is different, it could lead to parsing errors. Ensure that `SYMTAB.txt` and `LITTAB.txt` follow the expected format strictly (i.e., space-separated values with correct indices).
+
+- **Data Integrity**:
+    - If the index values in the input files are inconsistent or incorrect (e.g., referring to non-existing symbols or literals), the code might crash when accessing `SYMTAB` or `LITTAB`. You should handle potential `IndexOutOfBoundsException` or check for valid indices before accessing them.
+    
+### Example File Format Expectations:
+1. **SYMTAB.txt**:
+    ```
+    1 SYMBOL1 1000
+    2 SYMBOL2 2000
+    ```
+
+2. **LITTAB.txt**:
+    ```
+    1 LITERAL1 3000
+    2 LITERAL2 4000
+    ```
+
+3. **IC.txt (Intermediate Code)**:
+    ```
+    IS10 S1
+    IS20 L1
+    DL,01 1000
+    IS30 S2
+    ```
+
+### Suggestions for Modifications:
+- **Command-Line Arguments for File Paths**: If you want to avoid hardcoded paths, allow file paths to be passed as command-line arguments.
+  ```java
+  public static void main(String[] args) {
+      if (args.length != 3) {
+          System.out.println("Please provide file paths for IC.txt, SYMTAB.txt, and LITTAB.txt");
+          return;
+      }
+      String icFile = args[0];
+      String symtabFile = args[1];
+      String littabFile = args[2];
+      Pass_2 pass2 = new Pass_2();
+      pass2.generateCode(icFile, symtabFile, littabFile);
+  }
+  ```
+
+- **Improving Code Readability**: You could make the `generateCode()` method more readable by breaking down the logic into smaller helper methods. For example, separate the handling of different instruction types (AD, DL, IS) into separate methods.
+
+---
+
+Let me know if you'd like help with any further modifications or improvements!
+*/

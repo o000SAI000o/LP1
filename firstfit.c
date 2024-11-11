@@ -76,4 +76,97 @@ File No.	File Size	Block No.	Block Size Remaining	Fragment
 2		417		5		183			183
 3		112		2		176			176
 4		476		Not Allocated
+
+
+
+The code you provided implements the **First Fit** memory allocation scheme. Here's an explanation of how it works and the corresponding output:
+
+### **First Fit Memory Allocation Algorithm:**
+The **First Fit** allocation strategy assigns a file to the **first block** that is large enough to accommodate the file. It scans through the blocks in order and allocates the file to the first block that has sufficient space.
+
+### **Code Explanation:**
+
+1. **Variables:**
+   - `frag[max]`: Array to store the fragmentation (unused space) after file allocation in each block.
+   - `b[max]`: Array to store the size of each block.
+   - `f[max]`: Array to store the size of each file.
+   - `bf[max]`: Array to mark the status of blocks (whether allocated or not).
+   - `ff[max]`: Array to store the block allocated to each file (or `-1` if no block is allocated).
+
+2. **Input:**
+   - The program first asks for the number of blocks (`nb`) and the number of files (`nf`).
+   - Then, it asks for the size of each block and file.
+   - Each block is initialized to `0` (unallocated) in `bf`, and each file is initialized to `-1` (unallocated) in `ff`.
+
+3. **First Fit Allocation Logic:**
+   - For each file, the program checks each block to find the **first block** that is **unallocated** and has enough space to accommodate the file.
+   - If such a block is found:
+     - The file is allocated to that block.
+     - The block size is updated by subtracting the file size, indicating the remaining space in the block.
+     - The fragmentation (remaining space in the block after file allocation) is calculated and stored.
+   - If no block can accommodate the file, the file is marked as "Not Allocated."
+
+4. **Output:**
+   - After all files are processed, the program displays the allocation details for each file:
+     - File number, file size, allocated block number, remaining block size after allocation, and fragmentation.
+     - If a file is not allocated, it displays "Not Allocated."
+
+### **Sample Input and Output Walkthrough:**
+
+**Input:**
+- Number of Blocks: 5
+- Number of Files: 4
+- Block Sizes: 100, 500, 200, 300, 600
+- File Sizes: 212, 417, 112, 476
+
+**Step-by-Step Allocation:**
+1. **File 1 (212)**:
+   - The program checks the blocks one by one:
+     - Block 1 (100) is too small.
+     - Block 2 (500) is large enough, so File 1 is allocated to Block 2.
+     - Block 2 size reduces to 500 - 212 = 288.
+     - Fragmentation for File 1: 288 (remaining space in Block 2).
+   
+2. **File 2 (417)**:
+   - The program checks the blocks:
+     - Block 1 (100) is too small.
+     - Block 2 (288) is too small (after File 1 allocation).
+     - Block 3 (200) is too small.
+     - Block 4 (300) is too small.
+     - Block 5 (600) is large enough, so File 2 is allocated to Block 5.
+     - Block 5 size reduces to 600 - 417 = 183.
+     - Fragmentation for File 2: 183 (remaining space in Block 5).
+   
+3. **File 3 (112)**:
+   - The program checks the blocks:
+     - Block 1 (100) is too small.
+     - Block 2 (288) is large enough, so File 3 is allocated to Block 2.
+     - Block 2 size reduces to 288 - 112 = 176.
+     - Fragmentation for File 3: 176 (remaining space in Block 2).
+   
+4. **File 4 (476)**:
+   - The program checks the blocks:
+     - Block 1 (100) is too small.
+     - Block 2 (176) is too small.
+     - Block 3 (200) is too small.
+     - Block 4 (300) is too small.
+     - Block 5 (183) is too small.
+     - No suitable block is found, so File 4 is not allocated.
+
+**Output:**
+```
+File No.    File Size    Block No.    Block Size Remaining    Fragment
+1           212          2            176                     288
+2           417          5            183                     183
+3           112          2            176                     176
+4           476          Not Allocated
+```
+
+### **Key Points:**
+- **First Fit** looks for the first available block that can fit a file, without considering other blocks.
+- This strategy is simple and fast but may cause fragmentation over time as it leaves smaller unutilized spaces in blocks.
+- The program accurately tracks the allocation, remaining block sizes, and fragmentation.
+
+### **Conclusion:**
+This code implements the **First Fit Memory Allocation** scheme for managing file allocations in memory blocks. It's a simple and efficient way to allocate files, though it might not always be the most efficient in terms of space utilization, as it allocates files to the first available block without considering the best possible fit.
 */
